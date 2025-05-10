@@ -10,15 +10,16 @@ import java.util.List;
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Long> {
 
-    List<Cita> findByDoctorIdAndHorarioBetween(Long idDoctor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    List<Cita> findByDoctor_IdDoctorAndHorarioBetween(Long idDoctor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
     List<Cita> findByHorarioBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
-    List<Cita> findByPacienteAndHorarioBetween(Long idPaciente, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    List<Cita> findByPaciente_IdPacienteAndHorarioBetween(Long idPaciente, LocalDateTime inicio, LocalDateTime fin);
 
-    boolean existsByConsultorioIdAndHorario(Long idConsultorio, LocalDateTime horario);
 
-    boolean existsByDoctorIdAndHorario(Long idDoctor, LocalDateTime horario);
+    boolean existsByConsultorio_IdConsultorioAndHorario(Long idConsultorio, LocalDateTime horario);
 
-    long countByDoctorAndHorarioBetween(Long idDoctor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    boolean existsByDoctor_IdDoctorAndHorario(Long idDoctor, LocalDateTime horario);
+
+    long countByDoctor_IdDoctorAndHorarioBetween(Long idDoctor, LocalDateTime fechaInicio, LocalDateTime fechaFin);
 }

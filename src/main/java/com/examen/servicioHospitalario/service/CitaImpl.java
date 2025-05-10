@@ -27,33 +27,28 @@ public class CitaImpl implements ICita {
     }
 
     @Override
-    public void eliminar(Long id) {
-        citaRepository.deleteById(id);
-    }
-
-    @Override
     public boolean existeCitaConsultorioHorario(Long consultorioId, LocalDateTime horario) {
-        return citaRepository.existsByConsultorioIdAndHorario(consultorioId, horario);
+        return citaRepository.existsByConsultorio_IdConsultorioAndHorario(consultorioId, horario);
     }
 
     @Override
-    public boolean existeCitaDoctorHorario(Long doctorId, LocalDateTime horario) {
-        return citaRepository.existsByDoctorIdAndHorario(doctorId, horario);
+    public boolean existeCitaDoctorHorario(Long idDoctor, LocalDateTime horario) {
+        return citaRepository.existsByDoctor_IdDoctorAndHorario(idDoctor, horario);
     }
 
     @Override
-    public long contarCitasDoctorEnDia(Long doctorId, LocalDate fecha) {
-        return citaRepository.countByDoctorAndHorarioBetween(doctorId, fecha.atStartOfDay(), fecha.atTime(23, 59));
+    public long contarCitasDoctorEnDia(Long idDoctor, LocalDate fecha) {
+        return citaRepository.countByDoctor_IdDoctorAndHorarioBetween(idDoctor, fecha.atStartOfDay(), fecha.atTime(23, 59));
     }
 
     @Override
     public List<Cita> citasPacienteEntre(Long pacienteId, LocalDateTime desde, LocalDateTime hasta) {
-        return citaRepository.findByPacienteAndHorarioBetween(pacienteId, desde, hasta);
+        return citaRepository.findByPaciente_IdPacienteAndHorarioBetween(pacienteId, desde, hasta);
     }
 
     @Override
-    public List<Cita> citasDoctorEnDia(Long doctorId, LocalDate fecha) {
-        return citaRepository.findByDoctorIdAndHorarioBetween(doctorId, fecha.atStartOfDay(), fecha.atTime(23, 59));
+    public List<Cita> citasDoctorEnDia(Long idDoctor, LocalDate fecha) {
+        return citaRepository.findByDoctor_IdDoctorAndHorarioBetween(idDoctor, fecha.atStartOfDay(), fecha.atTime(23, 59));
     }
 
     @Override

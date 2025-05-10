@@ -13,8 +13,6 @@ public interface ICita {
 
     Optional<Cita> buscarPorId(Long id);
 
-    void eliminar(Long id);
-
     boolean existeCitaConsultorioHorario(Long consultorioId, LocalDateTime horario);
 
     boolean existeCitaDoctorHorario(Long doctorId, LocalDateTime horario);

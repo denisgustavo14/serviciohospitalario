@@ -53,7 +53,7 @@ public class Hospitalmpl implements IHospital{
                           "Paciente no encontrado",
                           "Paciente con id " + citaRequest.getIdPaciente()));
 
-        LocalDateTime horario = citaRequest.getHoraConsulta();
+        LocalDateTime horario = citaRequest.getHorario();
         LocalDate fecha = horario.toLocalDate();
 
         Cita cita = crearCita(consultorio, doctor, paciente, horario, fecha);

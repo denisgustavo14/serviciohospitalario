@@ -19,5 +19,5 @@ public class CitaRequest {
 
     private Long idPaciente;
 
-    private LocalDateTime horaConsulta;
+    private LocalDateTime horario;
 }
