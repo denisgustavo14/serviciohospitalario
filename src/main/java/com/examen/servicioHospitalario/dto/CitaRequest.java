@@ -30,6 +30,5 @@ public class CitaRequest {
     private Long idPaciente;
 
     @NotNull(message = "el campo es requerido")
-    @Positive(message = "el campo debe ser un positivo")
     private LocalDateTime horario;
 }
