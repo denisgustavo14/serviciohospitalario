@@ -3,11 +3,13 @@ package com.examen.servicioHospitalario.controller;
 import com.examen.servicioHospitalario.dto.CitaRequest;
 import com.examen.servicioHospitalario.dto.CitaResponse;
 import com.examen.servicioHospitalario.service.IHospital;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -17,7 +19,12 @@ public class HospitalController {
     private final IHospital iHospital;
 
     @PostMapping("/crearCita")
-    public CitaResponse crearCita(@RequestBody CitaRequest citaRequest) {
+    public CitaResponse crearCita(final @Valid @RequestBody CitaRequest citaRequest) {
         return iHospital.crearCita(citaRequest);
+    }
+
+    @GetMapping("/citasPorDocYFecha/{id}/fecha/{fecha}")
+    public List<CitaResponse> getCitasPorDc(final @PathVariable Long id, final @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return iHospital.getCitasPorDocYFech(id, fecha);
     }
 }

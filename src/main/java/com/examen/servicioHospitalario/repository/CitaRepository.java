@@ -16,7 +16,6 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 
     List<Cita> findByPaciente_IdPacienteAndHorarioBetween(Long idPaciente, LocalDateTime inicio, LocalDateTime fin);
 
-
     boolean existsByConsultorio_IdConsultorioAndHorario(Long idConsultorio, LocalDateTime horario);
 
     boolean existsByDoctor_IdDoctorAndHorario(Long idDoctor, LocalDateTime horario);

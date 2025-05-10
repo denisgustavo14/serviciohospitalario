@@ -18,10 +18,4 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPaciente;
 
-    private String nombre;
-
-    private String apPaterno;
-
-    private String apMaterno;
-
 }

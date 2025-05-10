@@ -16,10 +16,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class Hospitalmpl implements IHospital{
+public class Hospitalmpl implements IHospital {
 
     private final ICita icita;
 
@@ -31,7 +33,7 @@ public class Hospitalmpl implements IHospital{
 
 
     @Override
-    public CitaResponse crearCita(CitaRequest citaRequest) {
+    public CitaResponse crearCita(final CitaRequest citaRequest) {
 
         Doctor doctor = doctorRespository.findById(citaRequest.getIdDoctor())
                 .orElseThrow(()-> new HospitalException(
@@ -61,8 +63,20 @@ public class Hospitalmpl implements IHospital{
         return construyeResponse(cita);
     }
 
+    @Override
+    public List<CitaResponse> getCitasPorDocYFech(final Long id, final LocalDate fecha) {
+        List<CitaResponse> citas = new ArrayList<>();
+        List<Cita> cita = icita.citasDoctorEnDia(id, fecha);
 
-    public Cita crearCita(Consultorio consultorio, Doctor doctor,  Paciente paciente, LocalDateTime horario, LocalDate fecha) {
+        for (Cita i : cita) {
+            citas.add(construyeResponse(i));
+        }
+
+        return citas;
+    }
+
+
+    public Cita crearCita(final Consultorio consultorio, final Doctor doctor, final Paciente paciente, final LocalDateTime horario, final LocalDate fecha) {
         if (icita.existeCitaConsultorioHorario(consultorio.getIdConsultorio(), horario)) {
             throw new HospitalException(HttpStatus.CONFLICT, "C002", "Consultorio ocupado", "ya hay una cita en este consultorio");
         }
@@ -71,6 +85,7 @@ public class Hospitalmpl implements IHospital{
             throw new HospitalException(HttpStatus.CONFLICT, "D002", "Doctor ocupado", "el doctor ya tiene una cita en este horario");
         }
 
+        //verifica si hay alguna cita entre -2 y +2 horas
         if (!icita.citasPacienteEntre(paciente.getIdPaciente(), horario.minusHours(2), horario.plusHours(2)).isEmpty()) {
             throw new HospitalException(HttpStatus.CONFLICT, "P002", "Paciente ocupado", "el paciente ya tiene una cita en este horario");
         }
@@ -88,7 +103,7 @@ public class Hospitalmpl implements IHospital{
         return icita.guardar(cita);
     }
 
-    public CitaResponse construyeResponse(Cita cita) {
+    public CitaResponse construyeResponse(final Cita cita) {
         CitaResponse citaResponse = new CitaResponse();
         citaResponse.setIdCita(cita.getIdCita());
         citaResponse.setDoctor(cita.getDoctor());
